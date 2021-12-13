@@ -4,14 +4,17 @@
 function test(){
   var cell = SpreadsheetApp.getCurrentCell();
   var formula = cell.getFormula();
-  formula = formula.replace(/\s+/g, ""); 
+  //formula = formula.replace(/\s+/g, ""); //substitute all spaces
+  formula = formula.replace(/[;]\s+/gm, ";"); 
+  formula = formula.replace(/[(]\s+/gm, "("); 
+  formula = formula.replace(/[)]\s+/gm, ")");
   cell.offset(0,1).setFormula(prettify(formula));
 }
 
 function prettify(formula){
   var pretty = '';
   var tabNum = 1;
-  var tabOffset = 4;
+  var tabOffset = 5;
   var tabs = [];
   formula.split('').forEach(function(c,i){
     if(/[\{\(]/.test(c)){
