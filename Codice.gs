@@ -1,7 +1,7 @@
 //GSHEET formula beautifier:
 //from https://itectec.com/webapp/google-sheets-pretty-print-google-sheet-formula/
 
-function test(){
+function beautify(){
   var cell = SpreadsheetApp.getCurrentCell();
   var formula = cell.getFormula();
   //formula = formula.replace(/\s+/g, ""); //substitute all spaces
@@ -9,6 +9,16 @@ function test(){
   formula = formula.replace(/[(]\s+/gm, "("); 
   formula = formula.replace(/[)]\s+/gm, ")");
   cell.offset(0,1).setFormula(prettify(formula));
+}
+
+function minify(){
+  var cell = SpreadsheetApp.getCurrentCell();
+  var formula = cell.getFormula();
+  //formula = formula.replace(/\s+/g, ""); //substitute all spaces
+  formula = formula.replace(/[;]\s+/gm, ";"); 
+  formula = formula.replace(/[(]\s+/gm, "("); 
+  formula = formula.replace(/[)]\s+/gm, ")");
+  cell.offset(0,1).setFormula(formula);
 }
 
 function prettify(formula){
@@ -21,8 +31,8 @@ function prettify(formula){
        tabNum++;
       tabs[tabNum] = (tabs[tabNum - 1] ? tabs[tabNum - 1] : 0) + tabOffset + 1;
       //tabOffset = 0;
-      pretty += c + '\n' + ' '.repeat(tabs[tabNum]);
-    } else if(/[\}\)]/.test(c)){
+      pretty += c ; //pretty += c + '\n' + ' '.repeat(tabs[tabNum]);
+    } else if(/[\}\)]/.test(c)){ 
       tabNum--;
       pretty += c + '\n' + ' '.repeat(tabs[tabNum]);
       //tabOffset = 0;
