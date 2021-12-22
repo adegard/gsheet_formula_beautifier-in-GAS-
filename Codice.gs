@@ -24,14 +24,16 @@ function minify(){
 function prettify(formula){
   var pretty = '';
   var tabNum = 1;
-  var tabOffset = 5;
+  var tabOffset = 4;
   var tabs = [];
+  const regexif =  /[\{\(]/;     //    /[\{\(]/   /SE[(]/gm    //https://stackoverflow.com/questions/56762554/what-is-the-regexmatch-equivalent-in-google-apps-script
+ 
   formula.split('').forEach(function(c,i){
-    if(/[\{\(]/.test(c)){
-       tabNum++;
+    if(regexif.test(c)){    //       //    /[\{\(]/
+      tabNum++;
       tabs[tabNum] = (tabs[tabNum - 1] ? tabs[tabNum - 1] : 0) + tabOffset + 1;
       //tabOffset = 0;
-      pretty += c ; //pretty += c + '\n' + ' '.repeat(tabs[tabNum]);
+      pretty += c + '\n' + ' '.repeat(tabs[tabNum]);
     } else if(/[\}\)]/.test(c)){ 
       tabNum--;
       pretty += c + '\n' + ' '.repeat(tabs[tabNum]);
