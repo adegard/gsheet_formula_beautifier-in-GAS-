@@ -14,10 +14,11 @@ function beautify(){
 function minify(){
   var cell = SpreadsheetApp.getCurrentCell();
   var formula = cell.getFormula();
-  //formula = formula.replace(/\s+/g, ""); //substitute all spaces
+ // formula = formula.replace(/\s+/g, ""); //substitute all spaces
   formula = formula.replace(/[;]\s+/gm, ";"); 
   formula = formula.replace(/[(]\s+/gm, "("); 
   formula = formula.replace(/[)]\s+/gm, ")");
+  formula = formula.replace(/\s+[)]/gm, ")");
   cell.offset(0,1).setFormula(formula);
 }
 
